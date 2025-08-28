@@ -25,12 +25,12 @@ const quizGenerationSchema = {
           },
           type: {
             type: Type.STRING,
-            enum: [QuestionType.SHORT_ANSWER, QuestionType.TRUE_FALSE, QuestionType.MULTIPLE_CHOICE],
+            enum: [QuestionType.TRUE_FALSE, QuestionType.MULTIPLE_CHOICE],
             description: "The type of question.",
           },
           options: {
             type: Type.ARRAY,
-            description: "A list of options for multiple choice questions. Should be null for other types.",
+            description: "A list of options for MULTIPLE_CHOICE questions. Should be null for TRUE_FALSE questions.",
             items: {
                 type: Type.STRING,
             }
@@ -42,7 +42,7 @@ const quizGenerationSchema = {
           },
           correctAnswer: {
             type: Type.STRING,
-            description: "The correct answer to the question. For TRUE_FALSE, it should be 'True' or 'False'.",
+            description: "The correct answer to the question. For TRUE_FALSE, it should be 'True' or 'False'. For MULTIPLE_CHOICE, it must exactly match one of the provided options.",
           },
         },
         required: ["question", "type", "difficulty", "correctAnswer"],
@@ -82,7 +82,9 @@ export const generateQuizFromNote = async (noteContent: string): Promise<QuizQue
 3.  **Create Meaningful Questions:** Generate 3 diverse questions (one 'easy', one 'medium', one 'hard') that test a deep understanding of the enriched concepts. The questions should promote critical thinking, not just rote memorization.
 4.  **Provide a Clear Answer:** For each question, provide a clear and concise correct answer.
 
-Include a mix of SHORT_ANSWER and TRUE_FALSE question types. For TRUE_FALSE questions, the student will answer with 'True' or 'False', and the 'correctAnswer' field should reflect that.
+Include a mix of TRUE_FALSE and MULTIPLE_CHOICE question types.
+- For TRUE_FALSE questions, the student will answer with 'True' or 'False', the 'correctAnswer' field should reflect that, and the 'options' field must be null.
+- For MULTIPLE_CHOICE questions, provide several plausible options (preferably 4) in the 'options' field. The 'correctAnswer' field must exactly match one of the strings from the 'options' array.
 
 The entire output, including questions, options, and answers, must be in **Korean**.
 

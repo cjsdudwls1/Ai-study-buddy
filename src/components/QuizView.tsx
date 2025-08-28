@@ -179,14 +179,19 @@ const QuizView: React.FC<QuizViewProps> = ({ note, onFinish, isPractice = false 
                   거짓
                 </button>
               </div>
-            ) : (
-              <input
-                type="text"
-                value={answers[index]}
-                onChange={(e) => handleAnswerChange(index, e.target.value)}
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500"
-              />
-            )}
+            ) : q.type === QuestionType.MULTIPLE_CHOICE ? (
+              <div className="space-y-2">
+                {q.options?.map((option, optionIndex) => (
+                  <button
+                    key={optionIndex}
+                    onClick={() => handleAnswerChange(index, option)}
+                    className={`w-full text-left px-4 py-3 rounded-md transition-colors border ${answers[index] === option ? 'bg-sky-500 text-white border-sky-500' : 'bg-white hover:bg-slate-100 border-slate-300'}`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </div>
         ))}
       </div>
