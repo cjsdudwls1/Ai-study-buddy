@@ -1,0 +1,5 @@
+{
+  "name": "AI 스터디 버디",
+  "description": "망각 곡선 이론을 활용하여 복습 시점을 예약하고, 학습 노트로부터 개인화된 퀴즈를 생성하여 능동적 회상(Active Recall)과 장기 기억력 향상을 돕는 지능형 학습 파트너입니다.",
+  "requestFramePermissions": []
+}
